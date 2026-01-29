@@ -542,10 +542,10 @@ export default function Home() {
         <div className="one">
           <h1 className="one">
             Hi
-            <span id="name">Irene</span>
+            <span id="name">Angel</span>
           </h1>
           <p className="two" id="greetingText">
-            I really like your name btw!
+            Keerthana, I really like your name btw!
           </p>
         </div>
 
@@ -583,11 +583,11 @@ export default function Home() {
         </div>
 
         <div className="six">
-          <img src="/img/irene.jpg" alt="profile" className="profile-picture" id="imagePath" />
+          <img src="/img/angel.jpg" alt="profile" className="profile-picture" id="imagePath" />
           <img src="/img/hat.svg" alt="hat" className="hat" />
           <div className="wish">
             <h3 className="wish-hbd">Happy Birthday!</h3>
-            <h5 id="wishText">May the js.prototypes always be with you! ;)</h5>
+            <h5 id="wishText">Wishing you a magical day filled with joy and laughter! 🎉</h5>
           </div>
         </div>
 
