@@ -61,6 +61,10 @@ export default function Home() {
   }
 
   const animationTimeline = (gsap: any) => {
+    // State to track if typing is complete
+    let isTypingComplete = false
+    let sendMessageCallback: (() => void) | null = null
+
     // split chars that needs to be animated individually
     const textBoxChars = document.getElementsByClassName('hbd-chatbox')[0]
     const hbd = document.getElementsByClassName('wish-hbd')[0]
@@ -140,6 +144,18 @@ export default function Home() {
         visibility: 'visible',
         duration: 1.5,
         stagger: 0.05,
+        onComplete: () => {
+          isTypingComplete = true
+          const Swal = (window as any).Swal
+          if (Swal) {
+            Swal.fire({
+              title: 'Please continue',
+              icon: 'success',
+              showConfirmButton: false,
+              timer: 1500,
+            })
+          }
+        },
       })
       .to('.fake-btn', {
         backgroundColor: 'rgb(127, 206, 248)',
@@ -527,6 +543,40 @@ export default function Home() {
     if (replyBtn) {
       replyBtn.onclick = () => {
         tl.restart()
+      }
+    }
+
+    // Send button handler with monkey popup
+    const sendBtn = document.querySelector('.fake-btn') as HTMLElement
+    if (sendBtn) {
+      sendBtn.style.cursor = 'pointer'
+      sendBtn.onclick = () => {
+        const Swal = (window as any).Swal
+        if (!Swal) return
+
+        if (!isTypingComplete) {
+          // Show monkey saying "please wait"
+          Swal.fire({
+            title: 'Please wait...',
+            icon: 'info',
+            iconColor: '#8B4513',
+            html: '<div style="font-size: 48px;">🐵</div><p style="margin-top: 10px;">The message is still being typed!</p>',
+            showConfirmButton: false,
+            timer: 2000,
+          })
+        } else {
+          // Typing is complete, proceed with sending
+          if (sendMessageCallback) {
+            sendMessageCallback()
+          }
+          // Optional: Show success message
+          Swal.fire({
+            title: 'Message sent!',
+            icon: 'success',
+            showConfirmButton: false,
+            timer: 1500,
+          })
+        }
       }
     }
   }
